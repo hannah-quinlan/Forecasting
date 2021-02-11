@@ -1,4 +1,4 @@
-
+#import data
 library(readxl) 
 
 UnemployementRates <- read_excel("UnemployementRates.xlsx", 
@@ -72,6 +72,10 @@ legend(x="topright",legend=c("Actual","MA Forecast (3)", "MA Forecast (5)", "SES
                               lwd=1,col=c("black","red","green","blue","orange"), hex = 0.5)
 
 
+
+
+Forecast Performance
+
 #Moving Average 3-yr forecast accuracy
 ma3$residuals
 mean(ma3$residuals)
@@ -87,14 +91,3 @@ accuracy(ses2)
 #SES alpha = 0.3 forecast accuracy
 ses3$residuals
 accuracy(ses3)
-
-
-
-
-
-
-
-
-
-#Time Series
-
