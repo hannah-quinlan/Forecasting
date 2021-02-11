@@ -1,0 +1,100 @@
+
+library(readxl) 
+
+UnemployementRates <- read_excel("UnemployementRates.xlsx", 
+     col_types = c("skip", "skip", "numeric"), 
+    skip = 3)
+
+View(UnemployementRates)
+
+#Time Series
+UnemployementRates = ts(UnemployementRates, start=1)
+
+#install smooth for sma
+install.packages("smooth")
+library(smooth)
+
+#Moving Average 3-yr
+ma3 = sma(UnemployementRates,order = 3,h=5)
+ma3$fitted
+lines(ma3$fitted,col="Red")
+
+#Moving Average 3-yr forecast
+ma3$forecast
+
+#Moving Average 5-yr
+ma5 = sma(UnemployementRates,order = 5,h=5)
+ma5$fitted
+lines(ma5$fitted,col="Green")
+
+#Moving Average 5-yr forecast
+ma5$forecast
+
+#install forecast for SES
+install.packages(“forecast”)
+library(forecast)
+
+
+ses2 = ses(UnemployementRates, h=5, alpha = 0.2)
+ses2$fitted
+sesm2$model
+ses2$x
+
+#SES alpha = 0.2 forecast
+ses2$mean
+
+
+
+plot(ses2,PI=FALSE ,main = "SES Forecast for Monthly Unemployment Rates (alpha = 0.2)", xlab = "Month", ylab= "Rate (%)",col=
+"Black", fcol="red",)
+lines(ses2$fitted, col="blue")
+legend(x="topright",legend=c("actual", "fitted","forecast"), lwd = 1,col=c("black","blue","red"))
+
+
+#SES alpha 0.3 forecasting technique
+ses3 = ses(UnemployementRates, h=5, alpha = 0.3)
+ses3$fitted
+
+plot(ses3,PI=FALSE,main = "SES Forecast for Monthly Unemployment Rates (alpha = 0.3)", xlab = "Month", ylab= "Rate (%)",col="Black", fcol="red",)
+lines(ses3$fitted, col="blue")
+legend(x="topright",legend=c("actual", "fitted","forecast"), lwd = 1,col=c("black","blue","red"))
+
+#SES alpha = 0.3 forecast
+sesmodel3$mean
+
+#Plot Actual and 4 Forecasting Techniques
+plot(UnemploymentRates, main = "Monthly Unemployment Rate (%) Forecasting",xlab="Month", ylab="Rate (%)",ylim=c(0,10))
+lines(ma3$fitted,col="Red")
+lines(ma5$fitted, col = "green")
+lines(ses2$fitted, col = "blue")
+lines(ses3$fitted,col="orange")
+legend(x="topright",legend=c("Actual","MA Forecast (3)", "MA Forecast (5)", "SES Forecast (alpha = 0.2)", "SES Forecast (alpha = 0.3)"), 
+                              lwd=1,col=c("black","red","green","blue","orange"), hex = 0.5)
+
+
+#Moving Average 3-yr forecast accuracy
+ma3$residuals
+mean(ma3$residuals)
+
+#Moving Average 5-yr forecast accuracy
+ma5$residuals
+mean(ma5$residuals)
+
+#SES alpha = 0.2 forecast performance
+ses2$residuals
+accuracy(ses2)
+
+#SES alpha = 0.3 forecast accuracy
+ses3$residuals
+accuracy(ses3)
+
+
+
+
+
+
+
+
+
+#Time Series
+
