@@ -3,17 +3,25 @@ WashingtonDCWeather <- read_excel("Library/Containers/com.apple.mail/Data/Librar
 sheet = "Data", col_types = c("skip",
 "skip", "skip", "numeric"))
 
+#Make Time Series
 View(WashingtonDCWeather)
-WashingtonDCWeather = ts(WashingtonDCWeather, start =1, frequency = 12)
+WashingtonDCWeathertimeseries = ts(WashingtonDCWeather, start =1, frequency = 12)
 WashingtonDCWeather
-decompose(WashingtonDCWeather)
 
-WashingtonDCWeather1990_2000 = WashingtonDCWeather[c(1:24)]
-WashingtonDCWeather1990_2000=ts(WashingtonDCWeather1990_2000,start=1, frequency = 12)
+#Training Data
+WashingtonDCWeather1990_2000 = WashingtonDCWeathertimeseries[c(1:24)]
+WashingtonDCWeather1990_2000=ts(WashingtonDCWeather1990_2000,start=c(1999,1), frequency = 12)
 WashingtonDCWeather1990_2000
 
-*holts-winters forecasting
-library(forecast)
-hwmodel = hw(WashingtonDCWeather1990_2000, h=12, level=c(0.95))
-summary(hwmodel)
-plot(hwmodel)
+#Testing Data
+WashingtonDCWeather2001actuals = WashingtonDCWeatherTimeSeries[c(25:33)]
+WashingtonDCWeather2001actuals=ts(WashingtonDCWeather2001actuals, start=c(2001,1), frequency=12)
+WashingtonDCWeather2001actuals
+
+# Holt-Winters Forecasting
+hwmodel2001fcst <- hw(WashingtonDCWeather1990_2000,h=12,level=c(0.95))
+summary(hwmodel2001fcst)
+plot(hwmodel2001fcst, main="2001 Monthly Temperature Forecasts (HW Method)", xlab = "Time", ylab = "Temps")
+
+#Check Accuracy of traning and testing data
+accuracy(hwmodel2001fcst,WashingtonDCWeather2001actuals)
