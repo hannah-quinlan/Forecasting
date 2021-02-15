@@ -1,0 +1,19 @@
+library(readxl)
+WashingtonDCWeather <- read_excel("Library/Containers/com.apple.mail/Data/Library/Mail Downloads/F1DB10B0-F41E-4146-9269-6686CBEAD55A/WashingtonDCWeather.xlsx",
+sheet = "Data", col_types = c("skip",
+"skip", "skip", "numeric"))
+
+View(WashingtonDCWeather)
+WashingtonDCWeather = ts(WashingtonDCWeather, start =1, frequency = 12)
+WashingtonDCWeather
+decompose(WashingtonDCWeather)
+
+WashingtonDCWeather1990_2000 = WashingtonDCWeather[c(1:24)]
+WashingtonDCWeather1990_2000=ts(WashingtonDCWeather1990_2000,start=1, frequency = 12)
+WashingtonDCWeather1990_2000
+
+*holts-winters forecasting
+library(forecast)
+hwmodel = hw(WashingtonDCWeather1990_2000, h=12, level=c(0.95))
+summary(hwmodel)
+plot(hwmodel)
