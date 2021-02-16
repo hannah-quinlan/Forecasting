@@ -14,7 +14,7 @@ WashingtonDCWeather1990_2000=ts(WashingtonDCWeather1990_2000,start=c(1999,1), fr
 WashingtonDCWeather1990_2000
 
 #Testing Data
-WashingtonDCWeather2001actuals = WashingtonDCWeatherTimeSeries[c(25:33)]
+WashingtonDCWeather2001actuals = WashingtonDCWeathertimeseries[c(25:33)]
 WashingtonDCWeather2001actuals=ts(WashingtonDCWeather2001actuals, start=c(2001,1), frequency=12)
 WashingtonDCWeather2001actuals
 
