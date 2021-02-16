@@ -1,0 +1,79 @@
+#Import Data
+PLESalesData <- read_excel("Documents/PLESalesData.xlsx",
+sheet = "Mower Unit Sales", col_types = c("skip",
+"numeric", "numeric", "numeric", "numeric",
+"numeric", "numeric", "numeric"), skip = 2)
+View(PLESalesData)
+
+#Create Matrices for Region/World/Industry
+NASales = ts(PLESalesData[,1], start=c(2014,1), frequency=12)
+SASales = ts(PLESalesData[,2], start=c(2014,1), frequency=12)
+EuroSales = ts(PLESalesData[,3], start=c(2014,1), frequency=12)
+PacSales = ts(PLESalesData[,4], start=c(2014,1), frequency=12)
+ChinaSales = ts(PLESalesData[,5], start=c(2014,1), frequency=12)
+WorldSales = ts(PLESalesData[,6], start=c(2014,1), frequency=12)
+IndustrySales = ts(PLESalesData[,7], start=c(2014,1), frequency=12)
+
+
+#2019 Forecasting
+library(forecast)
+
+#NA Forecast - HW Additive
+NAfcst = hw(NASales, h=12)
+plot(NAfcst, main="PLE NA Monthly Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(NAfcst)
+
+#SA Forecast - HW Multiplicative
+SAfcst = hw(SASales, h=12, seasonal=c("multiplicative"))
+plot(SAfcst, main="PLE SA Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(SAfcst)
+
+#Euro Forecast - HW Multiplicative
+Eurofcst = hw(EuroSales, h=12, seasonal=c("multiplicative"))
+plot(Eurofcst, main="PLE Europe Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(Eurofcst)
+
+#Pacific Forecast - Holt's Model
+Pacfcst = holt(PacSales, h=12, level=c(95))
+plot(Pacfcst, main="PLE Pacific Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(Pacfcst)
+
+#China Forecast - SES Model
+Chinafcst = ses(ChinaSales, h=12)
+plot(Chinafcst, main="PLE China China Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(Chinafcst)
+
+#World Forecast - HW Additive
+Worldfcst = hw(WorldSales, h=12)
+plot(Worldfcst, main="World Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(Worldfcst)
+
+#Industry Forecast - HW Additive
+Industryfcst = hw(IndustrySales, h=12)
+plot(NAfcst, main="Industry Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+summary(Industryfcst)
+
+
+
+
+#Forecasting Accuracy
+
+#NASales- Training Data
+NA_TrainingData=ts(NASales[c(1:48)], start=c(2014,1), frequency = 12)
+SA_TrainingData=ts(SASales[c(1:48)], start=c(2014,1), frequency = 12)
+Euro_TrainingData=ts(EuroSales[c(1:48)], start=c(2014,1), frequency = 12)
+Pac_TrainingData=ts(PacSales[c(1:48)], start=c(2014,1), frequency = 12)
+China_TrainingData=ts(ChinaSales[c(1:48)], start=c(2014,1), frequency = 12)
+World_TrainingData=ts(WorldSales[c(1:48)], start=c(2014,1), frequency = 12)
+Industry_TrainingData=ts(IndustrySales[c(1:48)], start=c(2014,1), frequency = 12)
+
+#NASales-Testing Data
+NA_TestingData=ts(NASales[c(49:60)], start=c(2018,1), frequency=12)
+SA_TestingData=ts(SASales[c(49:60)], start=c(2018,1), frequency=12)
+Euro_TestingData=ts(EuroSales[c(49:60)], start=c(2018,1), frequency=12)
+Pac_TestingData=ts(PacSales[c(49:60)], start=c(2018,1), frequency=12)
+China_TestingData=ts(ChinaSales[c(49:60)], start=c(2018,1), frequency=12)
+World_TestingData=ts(WorldSales[c(49:60)], start=c(2018,1), frequency=12)
+Industry_TestingData=ts(IndustrySales[c(49:60)], start=c(2018,1), frequency=12)
+
+
