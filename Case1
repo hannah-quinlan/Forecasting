@@ -58,7 +58,7 @@ summary(Industryfcst)
 
 #Forecasting Accuracy
 
-#NASales- Training Data
+#Training Data
 NA_TrainingData=ts(NASales[c(1:48)], start=c(2014,1), frequency = 12)
 SA_TrainingData=ts(SASales[c(1:48)], start=c(2014,1), frequency = 12)
 Euro_TrainingData=ts(EuroSales[c(1:48)], start=c(2014,1), frequency = 12)
@@ -67,7 +67,7 @@ China_TrainingData=ts(ChinaSales[c(1:48)], start=c(2014,1), frequency = 12)
 World_TrainingData=ts(WorldSales[c(1:48)], start=c(2014,1), frequency = 12)
 Industry_TrainingData=ts(IndustrySales[c(1:48)], start=c(2014,1), frequency = 12)
 
-#NASales-Testing Data
+#Testing Data
 NA_TestingData=ts(NASales[c(49:60)], start=c(2018,1), frequency=12)
 SA_TestingData=ts(SASales[c(49:60)], start=c(2018,1), frequency=12)
 Euro_TestingData=ts(EuroSales[c(49:60)], start=c(2018,1), frequency=12)
@@ -76,4 +76,30 @@ China_TestingData=ts(ChinaSales[c(49:60)], start=c(2018,1), frequency=12)
 World_TestingData=ts(WorldSales[c(49:60)], start=c(2018,1), frequency=12)
 Industry_TestingData=ts(IndustrySales[c(49:60)], start=c(2018,1), frequency=12)
 
+#NA Forecast Accuracy
+NAacc <- hw(NA_TrainingData,h=12)
+accuracy(NAacc,NA_TestingData)
 
+#SA Forecast Accuracy
+SAacc <- hw(SA_TrainingData,h=12)
+accuracy(SAacc,SA_TestingData)
+
+#Euro Forecast Accuracy
+Euroacc <- hw(Euro_TrainingData,h=12)
+accuracy(Euroacc,Euro_TestingData)
+
+#Pacific Forecast Accuracy
+Pacacc <- hw(Pac_TrainingData,h=12)
+accuracy(Pacacc,Pac_TestingData)
+
+#China Forecast Accuracy
+Chinaacc <- hw(China_TrainingData,h=12)
+accuracy(Chinaacc,China_TestingData)
+
+#World Forecast Accuracy
+Worldacc <- hw(World_TrainingData,h=12)
+accuracy(Worldacc,World_TestingData)
+
+#Industry Forecast Accuracy
+Industryacc <- hw(Industry_TrainingData,h=12)
+accuracy(Industryacc,Industry_TestingData)
