@@ -34,7 +34,7 @@ plot(Eurofcst, main="PLE Europe Monthly Unit Sales Forecasting", xlab = "Month/Y
 summary(Eurofcst)
 
 #Pacific Forecast - Holt's Model
-Pacfcst = holt(PacSales, h=12, level=c(95))
+Pacfcst = holt(PacSales, h=12)
 plot(Pacfcst, main="PLE Pacific Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
 summary(Pacfcst)
 
@@ -81,19 +81,19 @@ NAacc <- hw(NA_TrainingData,h=12)
 accuracy(NAacc,NA_TestingData)
 
 #SA Forecast Accuracy
-SAacc <- hw(SA_TrainingData,h=12)
+SAacc <- hw(SA_TrainingData,h=12,seasonal=c("multiplicative"))
 accuracy(SAacc,SA_TestingData)
 
 #Euro Forecast Accuracy
-Euroacc <- hw(Euro_TrainingData,h=12)
+Euroacc <- hw(Euro_TrainingData,h=12, seasonal=c("multiplicative"))
 accuracy(Euroacc,Euro_TestingData)
 
 #Pacific Forecast Accuracy
-Pacacc <- hw(Pac_TrainingData,h=12)
+Pacacc <- holt(Pac_TrainingData,h=12)
 accuracy(Pacacc,Pac_TestingData)
 
 #China Forecast Accuracy
-Chinaacc <- hw(China_TrainingData,h=12)
+Chinaacc <- ses(China_TrainingData,h=12)
 accuracy(Chinaacc,China_TestingData)
 
 #World Forecast Accuracy
