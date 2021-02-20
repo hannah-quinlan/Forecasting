@@ -50,7 +50,7 @@ summary(Worldfcst)
 
 #Industry Forecast - HW Additive
 Industryfcst = hw(IndustrySales, h=12)
-plot(NAfcst, main="Industry Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
+plot(Industryfcst, main="Industry Monthly Unit Sales Forecasting", xlab = "Month/Year", ylab = "Units")
 summary(Industryfcst)
 
 
